@@ -10,15 +10,20 @@ import flixel.FlxG;
 class Bullet extends FlxSprite
 {
 	public var velocidadBala:Int;
-	private var direccion:Int;
+	private var direccionX:Int;
+	private var direccionY:Int;
 	
-	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset,_direccion:Int,_velocidadBala:Int) 
+	private var proporcionX:Float;
+	private var proporcionY:Float;
+	
+	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset,_direccionX:Int,_dirrecionY:Int,_velocidadBala:Int) 
 	{
 		velocidadBala = _velocidadBala;
-	direccion = _direccion;
+	direccionX = _direccionX;
+	direccionY = _dirrecionY;
 		super(X, Y, SimpleGraphic);
 
-		makeGraphic(20, 5,FlxColor.GREEN);
+		makeGraphic(2,5,FlxColor.GREEN);
 		
 	
 		       
@@ -30,21 +35,25 @@ class Bullet extends FlxSprite
 		
 		super.update(elapsed);
 
-		
-		MoverBala();
+		//trace("m");
+	//	MoverBala();
 	}
-	public function MoverBala(){    
+	public function MoverBala(_proporcionX:Float,_proporcionY:Float){    
 		
-		this.x += velocidadBala*direccion;
-	
-		DestruccionBala();
+		proporcionX = _proporcionX;
+		proporcionY = _proporcionY;
+		 
+		 
+		this.x += velocidadBala*direccionX*proporcionX;
+		this.y += velocidadBala * proporcionY*direccionY;
+		//DestruccionBala();
 	}
 	
 	public function DestruccionBala(){
-	if(this.x>FlxG.width-this.width){	
+	
 //	trace("destruccion bala");
 		destroy();
-	}
+	
 	}
 
 	public function ContactoBala(obj:FlxSprite):Void
