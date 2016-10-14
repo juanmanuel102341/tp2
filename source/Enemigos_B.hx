@@ -50,10 +50,10 @@ class Enemigos_B extends FlxSprite
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
-		makeGraphic(25, 25, FlxColor.MAGENTA);
+		makeGraphic(15, 15, FlxColor.MAGENTA);
 	
-		x = FlxG.width ;
-		y = FlxG.height ;
+		//x = FlxG.width ;
+		//y = FlxG.height ;
 		coord_Enemigo_X = this.x;
 		coord_Enemigo_Y = this.y;
 		//coordX_player=FlxG.j

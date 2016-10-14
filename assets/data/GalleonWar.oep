@@ -16,7 +16,7 @@
     <Width>5000</Width>
     <Height>240</Height>
   </LevelMaximumSize>
-  <Filename>C:\Users\Juan Manuel\Desktop\assets_2\galleonWarLevel\galleonWarLevel\GalleonWar.oep</Filename>
+  <Filename>C:\Users\826\Desktop\galleonWarLevel\GalleonWar.oep</Filename>
   <AngleMode>Radians</AngleMode>
   <CameraEnabled>true</CameraEnabled>
   <CameraSize>
@@ -91,7 +91,7 @@
   <Tilesets>
     <Tileset>
       <Name>agua</Name>
-      <FilePath>sprites\agua_v1.png</FilePath>
+      <FilePath>spritesv2\agua_v1.png</FilePath>
       <TileSize>
         <Width>16</Width>
         <Height>16</Height>
@@ -100,7 +100,7 @@
     </Tileset>
     <Tileset>
       <Name>elementos</Name>
-      <FilePath>sprites\elementos.png</FilePath>
+      <FilePath>spritesv2\elementos_v1.png</FilePath>
       <TileSize>
         <Width>16</Width>
         <Height>16</Height>
@@ -109,7 +109,7 @@
     </Tileset>
     <Tileset>
       <Name>isla</Name>
-      <FilePath>sprites\galleta_pasto_v4.png</FilePath>
+      <FilePath>spritesv2\isla_v1.png</FilePath>
       <TileSize>
         <Width>16</Width>
         <Height>16</Height>
@@ -118,7 +118,7 @@
     </Tileset>
     <Tileset>
       <Name>arena</Name>
-      <FilePath>sprites\galleta_arena_v4.png</FilePath>
+      <FilePath>spritesv2\arena_v1.png</FilePath>
       <TileSize>
         <Width>16</Width>
         <Height>16</Height>

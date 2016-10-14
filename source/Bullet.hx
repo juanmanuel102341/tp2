@@ -23,7 +23,7 @@ class Bullet extends FlxSprite
 	direccionY = _dirrecionY;
 		super(X, Y, SimpleGraphic);
 
-		makeGraphic(2,5,FlxColor.GREEN);
+		makeGraphic(5,2,FlxColor.GREEN);
 		
 	
 		       

@@ -70,7 +70,7 @@ for (i in 0...ArrayBalas.length)
 
 if(optionActivo){
 
-	creacionOption();
+//	creacionOption();
 	
 	
 }
@@ -94,18 +94,18 @@ tiempo.reset();
 		if (FlxG.keys.pressed.DOWN&&this.y<FlxG.height-this.height){
 		
 	y += velocidad;
-	if (copia_option != null){
-	copia_option.y+= velocidad;
-		
-	}
+	//if (copia_option != null){
+	//copia_option.y+= velocidad;
+		//
+	//}
 	}else if(FlxG.keys.pressed.UP&&this.y>0)
 	{
 			
 	y -= velocidad;
-	if (copia_option != null){
-	copia_option.y -= velocidad;
-		
-	}
+	//if (copia_option != null){
+	//copia_option.y -= velocidad;
+		//
+	//}
 	}
 	if (FlxG.keys.pressed.RIGHT&&this.x<FlxG.width-this.width){
 	
@@ -118,10 +118,10 @@ tiempo.reset();
 	}else if (FlxG.keys.pressed.LEFT&&this.x>0){
 		
 	x -= velocidad;
-		if (copia_option != null){
-	copia_option.x -= velocidad;
-		
-	}
+		//if (copia_option != null){
+	//copia_option.x -= velocidad;
+		//
+	//}
 	}
 	if (FlxG.keys.justPressed.SPACE&&disparoActivo==false){
     // tiempo.reset();
@@ -137,7 +137,7 @@ tiempo.reset();
 		bala.y = this.y+this.height/2-bala.height/2;
 		ArrayBalas.push(bala);
 		FlxG.state.add(bala);
-		optionActivo = true;
+		//optionActivo = true;
 			
 		}
 		

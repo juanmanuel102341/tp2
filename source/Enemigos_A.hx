@@ -21,7 +21,7 @@ class Enemigos_A extends FlxSprite
 	public var g:Float = 0.0;
 	private var tiempoCaida:Float=4.0;
 	private var timer:Timer;
-	private var posYinicial:Float;
+	public var posYinicial:Float;
 	
 	private var tiempoDisparo:Timer = new Timer(1000);
 	public var fireRateA:Float = 0.5;
@@ -34,11 +34,11 @@ class Enemigos_A extends FlxSprite
 		
 		super(X, Y, SimpleGraphic);
 		timer = new Timer(100);
-		makeGraphic(25, 25, FlxColor.BLUE);
+		makeGraphic(10, 10, FlxColor.BLUE);
 	    
-		x = FlxG.width-this.width;
+		//x = FlxG.width-this.width;
 	//	trace("x= "+x);
-		y = FlxG.height / 2-this.height/2;
+		//y = FlxG.height / 2-this.height/2;
 		//trace("y= " + y);
 		
 		
@@ -110,7 +110,7 @@ this.y += g;
 if(this.x < 0){
 
 	
-	x = FlxG.width;
+	//x = FlxG.width;
 }
 	}
 	

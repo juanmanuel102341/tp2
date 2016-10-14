@@ -24,7 +24,7 @@ class Enemigo_C extends FlxSprite
 	private var random_num_X:Int;
 	private var bulletEnemigo_C:Bullet; 
 	
-	private var fireRate:Int=2;
+	private var fireRate:Int=4;
 	private var proporcionY_enemigo_c:Float;
 	private var proporcionY_jugador:Float;
 	private var proporcionX:Float;
@@ -108,14 +108,14 @@ class Enemigo_C extends FlxSprite
 	proporcionY = distancia_y / distanciaSprites;
 	
 	
-trace("distancia_x"+distancia_x);
-	
-	trace("distancia_y "+distancia_y);
-	
-	trace("proporcionX "+proporcionX);
-	
-	trace("proporcionY "+proporcionY);
-	
+//trace("distancia_x"+distancia_x);
+	//
+	//trace("distancia_y "+distancia_y);
+	//
+	//trace("proporcionX "+proporcionX);
+	//
+	//trace("proporcionY "+proporcionY);
+	//
 	tiempoDisparo.start();
 	
 	
@@ -146,7 +146,7 @@ trace("distancia_x"+distancia_x);
 	public function ObtencionDistancia(_distancia:Int){
 	
 		distanciaSprites = _distancia;
-		trace("distanciaSprites " + distanciaSprites);
+		//trace("distanciaSprites " + distanciaSprites);
 		
 	}
 	
