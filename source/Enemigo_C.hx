@@ -43,8 +43,8 @@ class Enemigo_C extends FlxSprite
 	private var velocidadBalaC:Int = 3;
 	private var balaC:FlxSprite;
 	private var distanciaSprites:Int;
-	//public var arrayBalas_C:Array=new Array();
-		public var arrayBalas_C= new Array();
+	
+	var bala:Bullet;
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		
@@ -75,12 +75,23 @@ class Enemigo_C extends FlxSprite
 		coordxEnemigo = this.x;
 		coordYEnemigo = this.y;
 		
+		if (bala != null){
+			bala.MoverBala(proporcionX, proporcionY);
+		
+			if (bala.x < 0 || bala.x > 5000 || bala.y > FlxG.height || bala.y < 0){
+				//trace("bala c muerte");
+				bala.destroy();
+			
+				bala = null;
+			}
+			
+		}
 		DisparoEnemigo_C();
 		
 	}
 	public function DisparoEnemigo_C(){
 	
-	if (tiempoDisparo.currentCount > fireRate){
+	if (tiempoDisparo.currentCount > fireRate&&bala==null){
 		
 		tiempoDisparo.reset();
 	
@@ -91,11 +102,11 @@ class Enemigo_C extends FlxSprite
 	//balaC = new FlxSprite();
 	//balaC.x = this.x;
 	//balaC.y = this.y;
-	var bala:Bullet = new Bullet(0, 0, null, -1,-1, 4);
+	bala = new Bullet(0, 0, null, -1,-1, 4);
 	bala.x = this.x;
 	bala.y = this.y;
 
-	arrayBalas_C.push(bala);
+	//arrayBalas_C.push(bala);
 	
 	FlxG.state.add(bala);	
 
@@ -120,17 +131,9 @@ class Enemigo_C extends FlxSprite
 	
 	
 	}
-	for (ib in 0...arrayBalas_C.length)
-{
-	//balaC.x -= velocidadBalaC * proporcionX;
-	//balaC.y -= velocidadBalaC * proporcionY;
+
 	
-	arrayBalas_C[ib].MoverBala(proporcionX,proporcionY);
-	if (arrayBalas_C[ib].x < 0||arrayBalas_C[ib].y<0||arrayBalas_C[ib].y>FlxG.height){
-		arrayBalas_C[ib].DestruccionBala();
-		arrayBalas_C.remove(arrayBalas_C[ib]);
-		}
-	}	
+	
 	}
 
 	public function ObtencionCoordenadasJugador_c(x_jugador:Float,y_jugador:Float){
@@ -150,4 +153,16 @@ class Enemigo_C extends FlxSprite
 		
 	}
 	
+	   public function ContactoPlayerEnemigoC(obj:Player){
+		
+		if (bala != null){
+			
+			if (bala.overlaps(obj)){
+				
+				//trace("contacto torreta");
+			}
+			
+		}
+		
+	}
 }

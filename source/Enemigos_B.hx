@@ -28,7 +28,7 @@ class Enemigos_B extends FlxSprite
 	private var resultadoPlayerModulo:Float;
 	
 	private var tiempoDisparo:Timer=new Timer(1000);
-	public var fireRateC:Float = 0.5;
+	public var fireRateC:Float = 3.5;
 	public var velocidadBalaB:Int = 8;
 	private var arrayBalasB = new Array();
 	
@@ -135,7 +135,7 @@ DisparoB();
 	public function LimiteEscenario():Void{
 		
 		if (this.x < 0){
-		x = FlxG.width;
+	///	x = FlxG.width;
 	ProporcionPersecucion = 1;
 		//	destroy();
 		}
@@ -214,4 +214,18 @@ DisparoB();
        }
 
 
+
+	   public function ContactoPlayerEnemigoB(obj:Player){
+		
+		if (bulletB != null){
+			
+			if (bulletB.overlaps(obj)){
+				
+				//trace("contacto B");
+			}
+			
+		}
+		
+	}
+	   
 }

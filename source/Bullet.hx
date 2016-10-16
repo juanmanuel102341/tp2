@@ -23,7 +23,7 @@ class Bullet extends FlxSprite
 	direccionY = _dirrecionY;
 		super(X, Y, SimpleGraphic);
 
-		makeGraphic(5,2,FlxColor.GREEN);
+		makeGraphic(5,2,FlxColor.MAGENTA);
 		
 	
 		       
@@ -52,7 +52,7 @@ class Bullet extends FlxSprite
 	public function DestruccionBala(){
 	
 //	trace("destruccion bala");
-		destroy();
+	destroy();
 	
 	}
 

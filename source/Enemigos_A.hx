@@ -165,4 +165,17 @@ if(bulletA != null){
 	
 	}
 	
+	
+	public function ContactoPlayerEnemigoA(obj:Player){
+		
+		if (bulletA != null){
+			
+			if (bulletA.overlaps(obj)){
+				
+				//trace("contacto A");
+			}
+			
+		}
+		
+	}
 }

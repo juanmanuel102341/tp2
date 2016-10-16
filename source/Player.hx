@@ -6,7 +6,7 @@ import flixel.FlxG;
 import flash.utils.Timer;
 import lime.math.Vector2;
 //import flixel.system;
-
+import flixel.group.FlxGroup.FlxTypedGroup;
 /**
  * ...
  * @author ...
@@ -19,10 +19,10 @@ class Player extends FlxSprite
 		public var fireRate:Float=2.5;
 		private var tiempo:Timer;
 		public var disparoActivo:Bool = false; 
-		public var vidasPlayer:Int = 3;
+		public var vidasPlayer:Int = 100;
 		public var coordenadasJugadorX:Float=0;
 		public var coordenadasJugadorY:Float=0;
-		public var ArrayBalas= new Array();
+		public var ArrayBalas:FlxTypedGroup<Bullet>;
 
 		public var optionActivo:Bool;
 		public var copia_option:Option;
@@ -30,13 +30,14 @@ class Player extends FlxSprite
 	
 		{
 	  super(X, Y, SimpleGraphic);
-	
+	//this.set_allowCollisions(1);
 	  coordenadasJugadorX = this.x;
 	  coordenadasJugadorY = this.y;
 		tiempo = new Timer(100);
-		
-		makeGraphic(25,25,FlxColor.RED);
-			
+	ArrayBalas = new FlxTypedGroup<Bullet>();
+	
+		//makeGraphic(25,25,FlxColor.RED);
+	
 		
 	tiempo.start();
 	//	trace("hola mundo");
@@ -48,21 +49,30 @@ class Player extends FlxSprite
 	
 {
 	
+	
 	super.update(elapsed);
 	//trace("tiempo "+tiempo.currentCount);
 
 	coordenadasJugadorX = this.x;
 	  coordenadasJugadorY = this.y;
 	Teclas();
-//trace(ArrayBalas.length);
-for (i in 0...ArrayBalas.length)
+//trace("bala p "+ArrayBalas.members.length);
+var obj_bala:Bullet;
+for (i in 0...ArrayBalas.members.length)
 {
+	obj_bala = ArrayBalas.members[i];
 //trace("hola mundo");
-	ArrayBalas[i].MoverBala(1, 0); 
+	obj_bala.MoverBala(1, 0); 
 
-	if (ArrayBalas[i].x > FlxG.width){
-		ArrayBalas[i].DestruccionBala();	
-		ArrayBalas.remove(ArrayBalas[i]);
+	if (obj_bala.x > 4500){
+		//trace("muerte bala");
+		
+		//ArrayBalas.members[i] = null;
+		//ArrayBalas.members.splice(i, 1);
+	obj_bala.kill();
+		//obj_bala.DestruccionBala();
+	//obj.DestruccionBala();	
+		
 	
 	}
 }
@@ -98,7 +108,7 @@ tiempo.reset();
 	//copia_option.y+= velocidad;
 		//
 	//}
-	}else if(FlxG.keys.pressed.UP&&this.y>0)
+	}else if(FlxG.keys.pressed.UP&&this.y>-50)
 	{
 			
 	y -= velocidad;
@@ -107,7 +117,7 @@ tiempo.reset();
 		//
 	//}
 	}
-	if (FlxG.keys.pressed.RIGHT&&this.x<FlxG.width-this.width){
+	if (FlxG.keys.pressed.RIGHT&&this.x<5000-40){
 	
 		
 	x += velocidad;
@@ -135,7 +145,7 @@ tiempo.reset();
 		bala = new Bullet(0,0,null,1,1,14);
 		bala.x = this.x + this.width / 2 + bala.width;
 		bala.y = this.y+this.height/2-bala.height/2;
-		ArrayBalas.push(bala);
+		ArrayBalas.add(bala);
 		FlxG.state.add(bala);
 		//optionActivo = true;
 			
