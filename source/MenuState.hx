@@ -16,6 +16,7 @@ import flixel.FlxObject;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.util.FlxColor;
 import flash.utils.Timer;
+
 class MenuState extends FlxState
 {
 	
@@ -33,7 +34,7 @@ class MenuState extends FlxState
 	public var collecionIsla:FlxTypedGroup<FlxSprite>;
 	
 	public var player_01:FlxTypedGroup<Player>;
-	
+	public var jefe_level:FlxTypedGroup<Boss>;
 	
 	
 	var enemigo_B:Enemigos_B;
@@ -53,6 +54,7 @@ class MenuState extends FlxState
 	public var kamikase:FlxTilemap;
 	public var pirata:FlxTilemap;
 	public var torre:FlxTilemap;
+	
 	
 	private var level_P:FlxTilemap;
 	
@@ -79,7 +81,7 @@ class MenuState extends FlxState
 		player_01 = new FlxTypedGroup<Player>();
 		coleccionB_2 = new FlxTypedGroup<Enemigos_B>();	
 		coleccionC_2 = new FlxTypedGroup<Enemigo_C>();
-		
+		jefe_level = new FlxTypedGroup<Boss>();
 		CargaLevel();
 	
 	
@@ -92,7 +94,9 @@ class MenuState extends FlxState
 
 		add(coleccionB_2);
 	add(coleccionC_2);	
-		//*****************enemigo sinusoide********************
+	
+	add(jefe_level);
+	//*****************enemigo sinusoide********************
 
 	
 	//for (i_1 in 3){
@@ -153,11 +157,10 @@ class MenuState extends FlxState
 				}
 			}
 	
-			
-		//**********contacto player con enemigo kamikace **********************88
-			
+			//****************enemigo Kamikaze********************
+		//****ontacto player con enemigo kamikace ****************			
 		
-			//**********contacto player con enemigo torreta**********************88
+			//**********contacto enemigo torreta player**********************88
 			if(player_01.countLiving()>0){
 		
 				for (i_c in 0...coleccionC_2.members.length) 
@@ -171,46 +174,12 @@ class MenuState extends FlxState
 			}	
 			
 			
-	//*****************enemigo Kamikaze********************	
-		if (player_01.countLiving() > 0){	
-			
-		//for (iB in 0...player_01.getFirstAlive().ArrayBalas.length)
-	//{
-		////trace("cantidad balas v" + player_01.getFirstAlive().ArrayBalas.countLiving());
-		//var objAuxBplayer:Bullet;
-		////contacto player enemigo
-		 //objAuxBplayer=player_01.getFirstAlive().ArrayBalas.members[iB];
-	//trace("vivos b " + coleccionB_2.countLiving());
-			//
-				//for (i in 0...coleccionB_2.length) 
-			//{
-				//var obj_aux_B:Enemigos_B;
-				//obj_aux_B = coleccionB_2.members[i];
-				//
-				//if (objAuxBplayer.overlaps(obj_aux_B))
-				 //{
-				//trace("vivos b " + coleccionB_2.countLiving());
-										 //
-				 //trace("muerte B!!!");
-				//// coleccionB_2.remove(coleccionB_2.members[iB]);
-				////coleccionB_2.members.splice(i, 1);
-				//
-				//objAuxBplayer.kill();
-				//obj_aux_B.kill();
-				//obj_aux_B = null;
-				//obj_auxBalasPlayer = null;
-				 //} 
-					 //
-									 //
-				 //
-					 //
-				 //}
-		//
-			//}
 	
+		if (player_01.countLiving() > 0){	
+		FlxG.overlap(player_01.getFirstAlive().ArrayBalas, coleccionB_2, ContactoBalasPlayer_Enemigo_B);
 		}
 		
-		FlxG.overlap(player_01.getFirstAlive().ArrayBalas, coleccionB_2, ContactoBalasPlayer_Enemigo_A);
+		
 		//if (FlxG.collide(player_01.getFirstAlive().ArrayBalas, coleccionB_2)){
 			////trace("contacto b");
 		//
@@ -251,7 +220,7 @@ class MenuState extends FlxState
 	
 		}	
 	
-	//*****************enemigo torreta********************
+	//********************************************enemigo torreta********************
 	if(player_01.countLiving()>0){	
 		
 		for (i2 in 0...coleccionC_2.members.length) 
@@ -268,15 +237,22 @@ class MenuState extends FlxState
 			
 		}
 	
+	FlxG.overlap(player_01.getFirstAlive().ArrayBalas, coleccionC_2, ContactoBalasPlayer_Enemigo_C);
+		
+		
 	}
 	//*********************contacto isla*******************************
 	if(player_01.countLiving()>0){
-			if (player_01.getFirstAlive().overlaps(collecionIsla)){
-		//trace("contactoisla");
+			//if (player_01.getFirstAlive().overlaps(collecionIsla)){
+	
 		//trace("contacto elementos");
 		posxPlayer = player_01.getFirstAlive().x;
 		posyPlayer = player_01.getFirstAlive().y;
-		
+	//if(FlxG.collide(player_01.getFirstAlive(),collecionIsla))
+	//{
+		//
+	//}
+		FlxG.overlap(player_01.getFirstAlive(), collecionIsla, contactoIsla);
 		//trace("muerte isla");
 	//player_01.getFirstAlive().kill();
 	//timerSpawnHeroe.start();
@@ -285,8 +261,7 @@ class MenuState extends FlxState
 		
 	
 			
-	}
-		
+			
 	
 	
 		SpawnHeroe();
@@ -366,24 +341,32 @@ class MenuState extends FlxState
 			var Y:Float = Std.parseFloat(datosEntidad.get("y"));
 		if (nombreEntidad == "player")
 		{
+		trace("player");
 		var player:Player = new Player(X, Y);
-		player.loadGraphic(AssetPaths.galeon_v1__png);
+		player.loadGraphic(AssetPaths.galleon_v2__png);
 	
 		player_01.add(player);	
 		}
-		else if (nombreEntidad == "pirata")
-		{
+		
+		if (nombreEntidad == "pirata")
+		{trace("pirata");
 			var e:Enemigos_A = new Enemigos_A(X, Y);
-			e.loadGraphic(AssetPaths.pirata_v1__png);
+			e.loadGraphic(AssetPaths.pirate_v2__png);
 			ColeccionA_2.add(e);
-		}else if (nombreEntidad == "colision"){
-		//trace("isla");
+		}
+		
+		if (nombreEntidad == "colision4"){
+		trace("isla");
 			var isla_c:FlxSprite = new FlxSprite(X, Y);
-			isla_c.loadGraphic(AssetPaths.colision_v2__png);
+			isla_c.loadGraphic(AssetPaths.colision_v5__png);
 			
+			
+		//	isla_c.makeGraphic(16, 16, FlxColor.GREEN);
 		collecionIsla.add(isla_c);	
-		}else if (nombreEntidad == "kamikase"){
-			
+		}
+		
+		if (nombreEntidad == "kamikase"){
+			trace("kamikace");
 			var e2:Enemigos_B = new Enemigos_B(X, Y);
 			e2.ObtencionCoordenadasJugador(player_01.getFirstAlive().x, player_01.getFirstAlive().y);
 			e2.ObtencionAnchoPlayer(player_01.getFirstAlive().width);
@@ -393,8 +376,9 @@ class MenuState extends FlxState
 			e2.loadGraphic(AssetPaths.kamikase_v1__png);
 			coleccionB_2.add(e2);
 			
-		}else if (nombreEntidad == "torre"){
-		
+		}
+		if (nombreEntidad == "torre"){
+		trace("torre");
 			var e3:Enemigo_C = new Enemigo_C(X, Y);
 			e3.loadGraphic(AssetPaths.torre_v1__png);
 			e3.ObtencionCoordenadasJugador_c(player_01.getFirstAlive().x, player_01.getFirstAlive().y);
@@ -402,6 +386,16 @@ class MenuState extends FlxState
 			dist_c=FlxMath.distanceBetween(player_01.getFirstAlive(), e3);
 			e3.ObtencionDistancia(dist_c);
 			coleccionC_2.add(e3);
+			
+		}
+		
+		if (nombreEntidad == "boss"){
+			trace("boss");
+		var auxJefe:Boss = new Boss(X, Y, AssetPaths.boss_v1__png);
+		jefe_level.add(auxJefe);
+		
+		
+			
 			
 		}
 	
@@ -423,11 +417,20 @@ class MenuState extends FlxState
 			}
 		}
 		
-		public function ContactoBalasPlayer_Enemigo_A(Object1:FlxObject, Object2:FlxObject):Void{
+		public function ContactoBalasPlayer_Enemigo_B(Object_bala:FlxObject, Objecto_enemigo:FlxObject):Void{
 			trace("contacto b2");
-		Object1.kill();
-		Object2.kill();
+		Object_bala.kill();
+		Objecto_enemigo.kill();
 		}
-		
+		public function ContactoBalasPlayer_Enemigo_C(Object_bala:FlxObject, Objecto_enemigo:FlxObject):Void{
+			trace("contacto c");
+		Object_bala.kill();
+		Objecto_enemigo.kill();
+		}
+		public function contactoIsla(Object_bala:FlxObject, Objecto_enemigo:FlxObject):Void{
+			trace("contacto isla");
+	//	Object_bala.kill();
+		//Objecto_enemigo.kill();
+		}
 }
 
