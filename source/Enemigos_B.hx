@@ -7,6 +7,7 @@ import flixel.math.FlxMath;
 //import lime.math.Vector2;
 import flixel.math.FlxAngle;
 import flash.utils.Timer;
+import flixel.group.FlxGroup.FlxTypedGroup;
 /**
  * ...
  * @author ...
@@ -28,7 +29,7 @@ class Enemigos_B extends FlxSprite
 	private var resultadoPlayerModulo:Float;
 	
 	private var tiempoDisparo:Timer=new Timer(1000);
-	public var fireRateC:Float = 3.5;
+	public var fireRateC:Float = 100;
 	public var velocidadBalaB:Int = 8;
 	private var arrayBalasB = new Array();
 	
@@ -47,6 +48,8 @@ class Enemigos_B extends FlxSprite
 	private var anchoPlayer:Float;
 
 	var bulletB:Bullet;
+	public var grupoBalasB:FlxTypedGroup<Bullet>; 
+	
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		super(X, Y, SimpleGraphic);
@@ -61,6 +64,7 @@ class Enemigos_B extends FlxSprite
 	
 	tiempoDisparo.start();
 	
+	grupoBalasB = new FlxTypedGroup<Bullet>();
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -182,28 +186,33 @@ DisparoB();
 
 	public function DisparoB(){
 	//	trace("TIEMPO "+tiempoDisparo.currentCount);
-		if(bulletB!=null){
-		//
-		//
-		
-		 bulletB.MoverBala(1, 0);
-	 if(bulletB.x<0){
-		 bulletB.destroy();
-		bulletB = null;
-		 
-	 }
+		for (i in 0...grupoBalasB.length)
+	{	
+	
+		var aux:Bullet;
+
+		aux = grupoBalasB.members[i];
+	
+	aux.MoverBala(1, 0);
+
+	if (aux.x < 0){
+		aux.kill();
+	
+
 		
 		}
 	
+		}
 	
-	if (tiempoDisparo.currentCount > fireRateC&&bulletB==null){
+	if (tiempoDisparo.currentCount > fireRateC){
 		
-		bulletB = new Bullet(0, 0,null, -1, -1, velocidadBalaB);
+		bulletB = new Bullet(0, 0,null, -1, 1, velocidadBalaB);
 		bulletB.x = this.x;
 		bulletB.y = this.y;
 		
 		FlxG.state.add(bulletB);
 		
+		grupoBalasB.add(bulletB);
 		//FlxG.state.add(bulletB);
 		//arrayBalasB.push(bulletB);
 		tiempoDisparo.reset();
@@ -215,17 +224,6 @@ DisparoB();
 
 
 
-	   public function ContactoPlayerEnemigoB(obj:Player){
-		
-		if (bulletB != null){
-			
-			if (bulletB.overlaps(obj)){
-				
-				//trace("contacto B");
-			}
-			
-		}
-		
-	}
+	   
 	   
 }

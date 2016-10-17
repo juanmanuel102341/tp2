@@ -26,7 +26,7 @@ class Boss extends FlxSprite
 		grupoBalas = new FlxTypedGroup<Bullet>(); 
 	
 		tiempoDisparo.start();
-
+trace("widt jefe "+this.width);
 	}
 	override public function update(elapsed:Float):Void
 		
@@ -60,17 +60,43 @@ class Boss extends FlxSprite
 		
 				for (i in 0...3)
 				{
+					if(this.y>-this.height+30&&this.y<FlxG.height-this.height-5){
+					//condicion anterior para q n me dispare fuera de pantalla
+						switch i
+	
+				{
+					case 0:
+						bulletJefe = new Bullet(0,0,null,-1,1,velocidadBala);
+				
+					bulletJefe.x = this.x;
+					bulletJefe.y = this.y+this.height/2;
+					
+					grupoBalas.add(bulletJefe);
+						FlxG.state.add(bulletJefe);
+					case 1:
+					
 					bulletJefe = new Bullet(0,0,null,-1,1,velocidadBala);
 				
 					bulletJefe.x = this.x;
-					bulletJefe.y = this.y + this.height/2;
-					
-					FlxG.state.add(bulletJefe);
+					bulletJefe.y = this.y + this.height/2+5;
 					
 					grupoBalas.add(bulletJefe);
+					FlxG.state.add(bulletJefe);
+					case 2:
+						bulletJefe = new Bullet(0,0,null,-1,1,velocidadBala);
+						bulletJefe.x = this.x;
+						bulletJefe.y = this.y + this.height/2+10;
+							
+						grupoBalas.add(bulletJefe);
+						FlxG.state.add(bulletJefe);
+				}
+					
+					
+				
 						tiempoDisparo.reset();
 						tiempoDisparo.start();
 				
+				}
 				}
 	
 	
@@ -79,29 +105,14 @@ class Boss extends FlxSprite
 
 	public function MoverBalasJefe(){
 		for (i in 0...grupoBalas.length)
-	{trace("mbj");
+	{	
+		//trace("mbj");
 		var auxBala:Bullet;
 		auxBala = grupoBalas.members[i];
 		
 		auxBala.MoverBala(1, 0);
-	
 		
-		
-		
-		
-		//switch i
-		//
-		 //{
-		//case 0:
-			//auxBala.MoverBala(1, 0);//recta
-		//case 1:
-		//
-			//auxBala.MoverBala(1, -1);//diagonal negativa
-		//case 2:
-			//auxBala.MoverBala(1, 1);//diag positiva
-		//}
-		
-  
+		  
 		}
 	}
 	

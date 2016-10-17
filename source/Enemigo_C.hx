@@ -8,7 +8,7 @@ import neko.Random;
 //import lime.math.Vector2;
 import flixel.math.FlxAngle;
  import flash.utils.Timer;
-
+import flixel.group.FlxGroup.FlxTypedGroup;
 /**
  * ...
  * @author ...
@@ -45,27 +45,29 @@ class Enemigo_C extends FlxSprite
 	private var distanciaSprites:Int;
 	
 	var bala:Bullet;
+	
+	public var grupoBalasC:FlxTypedGroup<Bullet>; 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		
 		super(X, Y, SimpleGraphic);
 		makeGraphic(5, 20, FlxColor.CYAN);
-		coordxEnemigo = this.x;
-		coordYEnemigo = this.y;
+	//	coordxEnemigo = this.x;
+		//coordYEnemigo = this.y;
 		
 		//trace("ancho: " + FlxG.width);
 	//	trace("ancho/2: " + Math.round(FlxG.width / 2));
 		//random_num = Math.round(Math.random() * FlxG.width)+Math.round(FlxG.width/2);
 		tiempoDisparo.start();
-		random_num_X=	FlxG.random.int(Math.round(FlxG.width / 2), FlxG.width);
-		random_num_Y=	FlxG.random.int(Math.round(this.height), Math.round(FlxG.height-this.height));
+	//	random_num_X=	FlxG.random.int(Math.round(FlxG.width / 2), FlxG.width);
+	//	random_num_Y=	FlxG.random.int(Math.round(this.height), Math.round(FlxG.height-this.height));
 		
-		x = random_num_X;
-		y = random_num_Y;
+		//x = random_num_X;
+		//y = random_num_Y;
 			
 	//	trace("random "+random_num);
 		//
-		
+		grupoBalasC = new FlxTypedGroup<Bullet>();
 	}
 	override public function update(elapsed:Float):Void
 		
@@ -75,15 +77,22 @@ class Enemigo_C extends FlxSprite
 		coordxEnemigo = this.x;
 		coordYEnemigo = this.y;
 		
-		if (bala != null){
-			bala.MoverBala(proporcionX, proporcionY);
-		
-			if (bala.x < 0 || bala.x > 5000 || bala.y > FlxG.height || bala.y < 0){
-				//trace("bala c muerte");
-				bala.destroy();
+			for (i in 0...grupoBalasC.length)
+	{
 			
-				bala = null;
-			}
+		var aux:Bullet;
+
+		aux = grupoBalasC.members[i];
+	
+		aux.MoverBala(proporcionX, proporcionY);
+
+			if (aux.x < 0||aux.x>5000||aux.y>FlxG.height||aux.y<0){
+					aux.kill();
+			
+
+				
+				}
+	
 			
 		}
 		DisparoEnemigo_C();
@@ -91,7 +100,7 @@ class Enemigo_C extends FlxSprite
 	}
 	public function DisparoEnemigo_C(){
 	
-	if (tiempoDisparo.currentCount > fireRate&&bala==null){
+	if (tiempoDisparo.currentCount > fireRate){
 		
 		tiempoDisparo.reset();
 	
@@ -107,7 +116,7 @@ class Enemigo_C extends FlxSprite
 	bala.y = this.y;
 
 	//arrayBalas_C.push(bala);
-	
+	grupoBalasC.add(bala);
 	FlxG.state.add(bala);	
 
 	distancia_x=coordxEnemigo - coordxJugador;//distancia en x
@@ -153,16 +162,5 @@ class Enemigo_C extends FlxSprite
 		
 	}
 	
-	   public function ContactoPlayerEnemigoC(obj:Player){
-		
-		if (bala != null){
-			
-			if (bala.overlaps(obj)){
-				
-				//trace("contacto torreta");
-			}
-			
-		}
-		
-	}
+	  
 }

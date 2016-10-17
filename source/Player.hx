@@ -19,7 +19,7 @@ class Player extends FlxSprite
 		public var fireRate:Float=2.5;
 		private var tiempo:Timer;
 		public var disparoActivo:Bool = false; 
-		public var vidasPlayer:Int = 100;
+		public var vidasPlayer:Int = 3;
 		public var coordenadasJugadorX:Float=0;
 		public var coordenadasJugadorY:Float=0;
 		public var ArrayBalas:FlxTypedGroup<Bullet>;
@@ -57,15 +57,16 @@ class Player extends FlxSprite
 	  coordenadasJugadorY = this.y;
 	Teclas();
 //trace("bala p "+ArrayBalas.members.length);
-var obj_bala:Bullet;
-for (i in 0...ArrayBalas.members.length)
+
+for (i in 0...ArrayBalas.length)
 {
+	var obj_bala:Bullet;
 	obj_bala = ArrayBalas.members[i];
 //trace("hola mundo");
 	obj_bala.MoverBala(1, 0); 
 
-	if (obj_bala.x > 4500){
-		//trace("muerte bala");
+	if (obj_bala.x > 5000){
+	//	trace("muerte bala");
 		
 		//ArrayBalas.members[i] = null;
 		//ArrayBalas.members.splice(i, 1);
@@ -108,7 +109,7 @@ tiempo.reset();
 	//copia_option.y+= velocidad;
 		//
 	//}
-	}else if(FlxG.keys.pressed.UP&&this.y>-50)
+	}else if(FlxG.keys.pressed.UP&&this.y>0-10)
 	{
 			
 	y -= velocidad;

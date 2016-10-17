@@ -7,6 +7,7 @@ import flixel.FlxG;
 import flixel.tweens.FlxTween;
 import flixel.math.FlxMath;
 import flash.utils.Timer;
+import flixel.group.FlxGroup.FlxTypedGroup;
 /**
  * ...
  * @author ...
@@ -24,11 +25,11 @@ class Enemigos_A extends FlxSprite
 	public var posYinicial:Float;
 	
 	private var tiempoDisparo:Timer = new Timer(1000);
-	public var fireRateA:Float = 0.5;
+	public var fireRateA:Float = 100;
 	public var velocidadBala_A:Int = 8;
 	private var arrayBalasA = new Array();
-	private var bulletA:Bullet;
-		
+	public var bulletA:Bullet;
+	public var grupoBalasA:FlxTypedGroup<Bullet>; 
 	public function new(?X:Float=0, ?Y:Float=0, ?SimpleGraphic:FlxGraphicAsset) 
 	{
 		
@@ -56,8 +57,12 @@ componenteY = Math.sin(2.5);//
 //	MoverEnemigo();
 	//this.velocity.x =;
 //this.acceleration.y = 120;
+grupoBalasA = new FlxTypedGroup<Bullet>();
+	
+tiempoDisparo.start();
 
-	tiempoDisparo.start();
+
+
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -131,27 +136,31 @@ if(this.x < 0){
 	////
 //}
 
-if(bulletA != null){
+	for (i in 0...grupoBalasA.length)
+	{	
+	var aux:Bullet;
+	aux = grupoBalasA.members[i];
 	
-	bulletA.MoverBala(1, 0);
+	aux.MoverBala(1, 0);
 
-	if (bulletA.x < 0){
-		bulletA.DestruccionBala();
+	if (aux.x < 0){
+		aux.kill();
 	
-		bulletA = null;
+
 		
-	}
+		}
 	
-}
+		}
 
-		if (tiempoDisparo.currentCount > fireRateA&&bulletA==null){
+		if (tiempoDisparo.currentCount > fireRateA){
 		
 		bulletA = new Bullet(0, 0, null, -1, 1, 6);
 		bulletA.x = this.x;
 		bulletA.y = this.y;
 		
 			FlxG.state.add(bulletA);
-		//arrayBalasA.push(bulletA);
+		grupoBalasA.add(bulletA);
+			//arrayBalasA.push(bulletA);
 		//FlxG.state.add(bulletA);
 	
 		tiempoDisparo.reset();
@@ -166,16 +175,21 @@ if(bulletA != null){
 	}
 	
 	
-	public function ContactoPlayerEnemigoA(obj:Player){
-		
-		if (bulletA != null){
-			
-			if (bulletA.overlaps(obj)){
-				
-				//trace("contacto A");
-			}
-			
-		}
-		
-	}
+	//public function ContactoPlayerEnemigoA(obj:Player):Bool{
+		//
+		//if (bulletA != null){
+			//
+			//if (bulletA.overlaps(obj)){
+				//
+				//return true;
+				//
+			//}else{
+				//return false;
+			//}
+			//
+		//}else{
+			//return false;
+		//}
+		//
+	//}
 }
